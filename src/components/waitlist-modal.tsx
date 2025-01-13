@@ -1,9 +1,9 @@
 'use client'
 
 import { useState } from 'react'
-import { Dialog, DialogContent } from "/components/ui/dialog"
-import { Button } from "/components/ui/button"
-import { Input } from "/components/ui/input"
+import { Dialog, DialogContent } from "../components/ui/dialog"
+import { Button } from "../components/ui/button"
+import { Input } from "../components/ui/input"
 import { UserCircle } from 'lucide-react'
 
 export function WaitlistModal({
@@ -66,9 +66,9 @@ export function WaitlistModal({
             </>
           ) : (
             <>
-              <h3 className="text-2xl font-bold mb-4">You're on the list! 🎉</h3>
+              <h3 className="text-2xl font-bold mb-4">You&apos;re on the list! 🎉</h3>
               <p className="text-gray-600">
-                We'll notify you when MailSync is ready. Thank you for your interest!
+                We&apos;ll notify you when MailSync is ready. Thank you for your interest!
               </p>
               <Button 
                 onClick={onClose}

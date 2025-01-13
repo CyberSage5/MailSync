@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client'
 
 import Image from 'next/image'
@@ -16,7 +17,7 @@ export default function About() {
 
       <section className="mb-16">
         <h2 className="text-3xl font-semibold mb-4">The Problem We Solve</h2>
-        <p className="text-lg mb-4">In today's digital age, managing multiple communication channels can be overwhelming. Email and WhatsApp are two of the most widely used communication platforms, yet they often exist in isolation. MailSync bridges this gap by forwarding important emails to WhatsApp, ensuring users stay organized and up-to-date without constantly switching between applications.</p>
+        <p className="text-lg mb-4">In today&apos;s digital age, managing multiple communication channels can be overwhelming. Email and WhatsApp are two of the most widely used communication platforms, yet they often exist in isolation. MailSync bridges this gap by forwarding important emails to WhatsApp, ensuring users stay organized and up-to-date without constantly switching between applications.</p>
       </section>
 
       <section className="mb-16">
@@ -56,11 +57,11 @@ export default function About() {
         <h2 className="text-3xl font-semibold mb-4">Testimonials</h2>
         <div className="grid md:grid-cols-2 gap-8">
           <blockquote className="italic text-lg border-l-4 border-blue-500 pl-4 py-2">
-            "MailSync has revolutionized the way I manage my emails. I never miss an important message now, and my productivity has skyrocketed!"
+            &quot;MailSync has revolutionized the way I manage my emails. I never miss an important message now, and my productivity has skyrocketed!&quot;
             <footer className="text-right mt-2">- Sarah K., Marketing Manager</footer>
           </blockquote>
           <blockquote className="italic text-lg border-l-4 border-blue-500 pl-4 py-2">
-            "As a busy entrepreneur, MailSync has been a game-changer. It's like having a personal assistant managing my inbox 24/7."
+            &quot;As a busy entrepreneur, MailSync has been a game-changer. It&apos;s like having a personal assistant managing my inbox 24/7.&quot;
             <footer className="text-right mt-2">- Alex M., Startup Founder</footer>
           </blockquote>
         </div>

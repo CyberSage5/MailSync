@@ -1,7 +1,7 @@
 'use client'
 
 import { CheckCircle } from 'lucide-react'
-import { Button } from "/components/ui/button"
+import { Button } from "../../components/ui/button"
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 

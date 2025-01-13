@@ -2,10 +2,10 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { Button } from "/components/ui/button"
+import { Button } from "../components/ui/button"
 import { ArrowRight, Sparkles, Mail, Zap, Shield, Brain } from 'lucide-react'
 import { motion } from 'framer-motion'
-import { WaitlistModal } from '/components/waitlist-modal'
+import { WaitlistModal } from '../components/waitlist-modal'
 
 export default function Home() {
   const [isWaitlistOpen, setIsWaitlistOpen] = useState(false)
