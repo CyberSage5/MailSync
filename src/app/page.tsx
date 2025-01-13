@@ -1,101 +1,135 @@
-import Image from "next/image";
+'use client'
+
+import { useState } from 'react'
+import Link from 'next/link'
+import { Button } from "/components/ui/button"
+import { ArrowRight, Sparkles, Mail, Zap, Shield, Brain } from 'lucide-react'
+import { motion } from 'framer-motion'
+import { WaitlistModal } from '/components/waitlist-modal'
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [isWaitlistOpen, setIsWaitlistOpen] = useState(false)
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+  return (
+    <div className="min-h-screen bg-white">
+      <main className="container mx-auto px-4 py-16">
+        {/* Beta Banner */}
+        <motion.div 
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="flex justify-center mb-16"
+        >
+          <button
+            onClick={() => setIsWaitlistOpen(true)}
+            className="group inline-flex items-center gap-2 px-6 py-2 rounded-full bg-gradient-to-r from-violet-100 to-violet-50 hover:from-violet-200 hover:to-violet-100 transition-all duration-300"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            <Sparkles className="w-4 h-4 text-violet-600" />
+            <span className="text-sm text-violet-900">Sign up now and be among our first beta testers</span>
+            <ArrowRight className="w-4 h-4 text-violet-600 group-hover:translate-x-1 transition-transform" />
+          </button>
+        </motion.div>
+
+        {/* Hero Section */}
+        <motion.section 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-center mb-24"
+        >
+          <h1 className="text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-600">
+            A Software that works
+            <br />
+            specially for you
+          </h1>
+          <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+            Forward important emails to WhatsApp and stay organized on-the-go. MailSync bridges the gap between your email and instant messaging.
+          </p>
+          <div className="flex justify-center gap-4">
+            <Button 
+              size="lg" 
+              className="bg-gray-900 hover:bg-gray-800 text-white rounded-full px-8"
+            >
+              <Link href="/signup" className="inline-flex items-center">
+                Get Started
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
+            <Button 
+              variant="outline" 
+              size="lg" 
+              className="rounded-full px-8"
+            >
+              <Link href="/about">Learn more</Link>
+            </Button>
+          </div>
+        </motion.section>
+
+        {/* Features Section */}
+        <section className="mb-24">
+          <h2 className="text-3xl font-bold text-center mb-12">Key Features</h2>
+          <div className="grid md:grid-cols-2 gap-8">
+            {[
+              { 
+                icon: Mail, 
+                title: 'Email Integration', 
+                description: 'Connect multiple email accounts seamlessly' 
+              },
+              { 
+                icon: Zap, 
+                title: 'Instant Forwarding', 
+                description: 'Get your important emails on WhatsApp instantly' 
+              },
+              { 
+                icon: Shield, 
+                title: 'Secure & Private', 
+                description: 'End-to-end encryption for all your communications' 
+              },
+              { 
+                icon: Brain, 
+                title: 'AI-Powered Filtering', 
+                description: 'Smart email prioritization using advanced ML' 
+              }
+            ].map((feature, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+                className="group p-8 rounded-2xl bg-gray-50 hover:bg-gray-100 transition-all duration-300"
+              >
+                <feature.icon className="h-8 w-8 text-gray-900 mb-4 group-hover:scale-110 transition-transform" />
+                <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
+                <p className="text-gray-600">{feature.description}</p>
+              </motion.div>
+            ))}
+          </div>
+        </section>
+
+        {/* CTA Section */}
+        <motion.section 
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          className="text-center mb-24 py-16 px-8 rounded-3xl bg-gradient-to-r from-gray-900 to-gray-800 text-white"
+        >
+          <h2 className="text-3xl font-bold mb-4">Ready to streamline your communication?</h2>
+          <p className="text-gray-300 mb-8 max-w-2xl mx-auto">
+            Join thousands of professionals who are already using MailSync to stay on top of their email game.
+          </p>
+          <Button 
+            size="lg" 
+            className="bg-white text-gray-900 hover:bg-gray-100 rounded-full px-8"
           >
-            Read our docs
-          </a>
-        </div>
+            <Link href="/signup" className="inline-flex items-center">
+              Start Free Trial
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Link>
+          </Button>
+        </motion.section>
+        <WaitlistModal 
+          isOpen={isWaitlistOpen} 
+          onClose={() => setIsWaitlistOpen(false)} 
+        />
       </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
     </div>
-  );
+  )
 }
+
