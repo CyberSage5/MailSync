@@ -1,106 +1,123 @@
 'use client'
 
-import { CheckCircle, AlertTriangle, Clock, ArrowRight } from 'lucide-react'
-import { motion } from 'framer-motion'
+import { useState, useEffect } from 'react'
+import Footer from '../../components/footer'
+import { CheckCircle, AlertTriangle, XCircle } from 'lucide-react'
 
-const services = [
-  { name: 'Email Forwarding', status: 'operational' },
-  { name: 'WhatsApp Integration', status: 'operational' },
-  { name: 'User Dashboard', status: 'operational' },
-  { name: 'API', status: 'partial_outage' },
-  { name: 'Database', status: 'operational' },
-]
+type ServiceStatus = 'operational' | 'degraded' | 'outage'
 
-const incidents = [
+type Service = {
+  name: string;
+  status: ServiceStatus;
+  description: string;
+}
+
+const initialServices: Service[] = [
   { 
-    date: '2023-05-15', 
-    title: 'API Partial Outage', 
-    description: 'We are currently experiencing issues with our API. Our team is working on resolving this as quickly as possible.',
-    status: 'investigating'
+    name: 'Email Forwarding', 
+    status: 'operational',
+    description: 'Core email forwarding functionality'
   },
   { 
-    date: '2023-05-10', 
-    title: 'Scheduled Maintenance', 
-    description: 'We will be performing scheduled maintenance on our servers. Expected downtime: 2 hours.',
-    status: 'completed'
+    name: 'WhatsApp Integration', 
+    status: 'operational',
+    description: 'Connection and message delivery to WhatsApp'
   },
+  { 
+    name: 'User Dashboard', 
+    status: 'operational',
+    description: 'Web interface for user account management'
+  },
+  { 
+    name: 'API', 
+    status: 'operational',
+    description: 'Public API for integrations'
+  },
+  { 
+    name: 'Email Filtering', 
+    status: 'operational',
+    description: 'AI-powered email importance detection'
+  },
+  { 
+    name: 'Notification System', 
+    status: 'operational',
+    description: 'Real-time alerts and notifications'
+  },
+  { 
+    name: 'Account Sync', 
+    status: 'operational',
+    description: 'Synchronization of user account data'
+  },
+  { 
+    name: 'Analytics', 
+    status: 'operational',
+    description: 'User activity and performance metrics'
+  }
 ]
 
 export default function Status() {
-  return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
-      <div className="container mx-auto px-4 py-24">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-16"
-        >
-          <h1 className="text-4xl font-bold mb-4">System Status</h1>
-          <p className="text-xl text-gray-600">Current status of all MailSync services</p>
-        </motion.div>
-        
-        <motion.section 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="mb-16"
-        >
-          <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
-            <div className="p-6 border-b border-gray-100">
-              <h2 className="text-xl font-semibold">Current Status</h2>
-            </div>
-            <div className="divide-y divide-gray-100">
-              {services.map((service) => (
-                <div key={service.name} className="flex items-center justify-between p-6">
-                  <span className="font-medium">{service.name}</span>
-                  <span className={`flex items-center gap-2 ${
-                    service.status === 'operational' ? 'text-green-600' : 'text-yellow-600'
-                  }`}>
-                    {service.status === 'operational' ? (
-                      <><CheckCircle className="h-5 w-5" /> Operational</>
-                    ) : (
-                      <><AlertTriangle className="h-5 w-5" /> Partial Outage</>
-                    )}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </motion.section>
+  const [services, setServices] = useState(initialServices)
 
-        <motion.section
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-        >
-          <h2 className="text-xl font-semibold mb-6">Incident History</h2>
-          <div className="space-y-4">
-            {incidents.map((incident, index) => (
-              <div 
-                key={index} 
-                className="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-shadow"
-              >
-                <div className="flex items-center gap-2 text-sm text-gray-600 mb-2">
-                  <Clock className="h-4 w-4" />
-                  <span>{incident.date}</span>
-                  <span className={`px-2 py-1 rounded-full text-xs ${
-                    incident.status === 'investigating' 
-                      ? 'bg-yellow-100 text-yellow-800' 
-                      : 'bg-green-100 text-green-800'
-                  }`}>
-                    {incident.status}
-                  </span>
+  useEffect(() => {
+    // Here you would typically fetch the current status from your backend
+    // For this example, we'll simulate some status changes after 3 seconds
+    const timer = setTimeout(() => {
+      setServices(prev => [
+        ...prev.slice(0, 3),
+        { ...prev[3], status: 'degraded' },
+        ...prev.slice(4, 6),
+        { ...prev[6], status: 'outage' },
+        prev[7]
+      ])
+    }, 3000)
+
+    return () => clearTimeout(timer)
+  }, [])
+
+  const getStatusIcon = (status: ServiceStatus) => {
+    switch (status) {
+      case 'operational':
+        return <CheckCircle className="h-5 w-5 text-green-500" />
+      case 'degraded':
+        return <AlertTriangle className="h-5 w-5 text-yellow-500" />
+      case 'outage':
+        return <XCircle className="h-5 w-5 text-red-500" />
+    }
+  }
+
+  const getStatusColor = (status: ServiceStatus) => {
+    switch (status) {
+      case 'operational':
+        return 'bg-green-100 text-green-800'
+      case 'degraded':
+        return 'bg-yellow-100 text-yellow-800'
+      case 'outage':
+        return 'bg-red-100 text-red-800'
+    }
+  }
+
+  return (
+    <div className="min-h-screen bg-white">
+      <main className="container mx-auto px-4 py-16">
+        <h1 className="text-4xl font-bold mb-8">MailSync System Status</h1>
+        <div className="space-y-4">
+          {services.map((service, index) => (
+            <div key={index} className="flex items-center justify-between p-4 border rounded-lg">
+              <div className="flex items-center space-x-4">
+                {getStatusIcon(service.status)}
+                <div>
+                  <h2 className="font-semibold">{service.name}</h2>
+                  <p className="text-sm text-gray-600">{service.description}</p>
                 </div>
-                <h3 className="text-lg font-semibold mb-2 flex items-center gap-2">
-                  {incident.title}
-                  <ArrowRight className="h-4 w-4 text-gray-400" />
-                </h3>
-                <p className="text-gray-600">{incident.description}</p>
               </div>
-            ))}
-          </div>
-        </motion.section>
-      </div>
+              <span className={`px-2 py-1 rounded-full text-sm ${getStatusColor(service.status)}`}>
+                {service.status.charAt(0).toUpperCase() + service.status.slice(1)}
+              </span>
+            </div>
+          ))}
+        </div>
+      </main>
+      <Footer />
     </div>
   )
 }
